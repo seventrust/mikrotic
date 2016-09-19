@@ -2,11 +2,7 @@
 session_start();
 
 
-if($_SESSION['verificar'] == null){
-  header('Location: index.html');
-}
-
-
+//
 
 ?>
 <!DOCTYPE html>

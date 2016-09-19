@@ -48,59 +48,79 @@ $(document).ready(function(){
            
         });
     });
+
+    $.ajax({
+       url: './scripts/getPaises.php',
+        type: 'POST',
+        dataType: 'json',
+        success: function (data) {
+           alert(data);
+           var html = '';
+            $.each(data, function (i, item) {
+               html+='<option value='+item.id+' value='+item.pais+'></option>';
+            });
+            $('#paises').append(html);
+
+        }
+    });
     
 });
 //INICIO DE SESION
-$('#login').click(function () {
+$(document).on('click', '#login', function () {
 
     var usuario = $('#usuario').val();
     var pass = $('#password').val();
-    
-    $.ajax({
-        url: './page/sesion/control.php',
-        type: 'POST',
-        dataType: 'text',
-        data:{
-            usuario: usuario,
-            pass: pass
-        },
-        beforeSend: function () {
-            $('#container').html('<img src="./img/init_sesion.gif" />');
-        },
 
-        success: function (data) {
+    if(usuario == "" && pass == ""){
+        alert("Los campos no pueden estar vacíos");
+    }else {
 
-            switch (data){
-                case '1':
-                    window.location = './panel.php';
+        $.ajax({
+            url: './page/sesion/control.php',
+            type: 'POST',
+            dataType: 'text',
+            data: {
+                usuario: usuario,
+                pass: pass
+            },
+            beforeSend: function () {
+                $('#container').html('<img src="./img/init_sesion.gif" />');
+            },
 
-                    alert("ESTA FUE LA OPCION");
-                    confirm("ESTAS SEGURO?");
-
-                    new PNotify({
-                        title: 'Error',
-                        text: 'LO que si es verga',
-                        type: 'error'
-                    });
-
-                    break;
-                case '-2':
-
-                    new PNotify({
-                        title: 'Error',
-                        text: 'El usuario o la contraseña no son correctos',
-                        type: 'error'
-                    });
-                    break;
-                default:
-                    break;
-            }
-        },
+            success: function (data) {
+                $('#container').html('<img src="./img/init_sesion.gif" />');
+                switch (data) {
+                    case '1':
+                        window.location = 'http://localhost/admin/panel.php';
 
 
-    });
+                        new PNotify({
+                            title: 'Error',
+                            text: 'Lo que si es verga',
+                            type: 'success'
+                        });
+
+                        break;
+                    case '-2':
+
+                        new PNotify({
+                            title: 'Error',
+                            text: 'El usuario o la contraseña no son correctos',
+                            type: 'error'
+                        });
+                        break;
+                    default:
+                        break;
+                }
+            },
+
+
+        });
+    }
 
 });
+
+//REGISTRAR UN NUEVO USUARIO
 
 
 
