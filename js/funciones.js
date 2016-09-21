@@ -5,8 +5,11 @@
  */
 
 $(document).ready(function(){
-    
-    $('.select2').select2();
+
+
+    $('#password').click(function (event) {
+        event.preventDefault;
+    });
     
     $('.message a').click(function(){
         $('form').animate(
@@ -16,53 +19,10 @@ $(document).ready(function(){
                 }, 
                 "slow");
     });
-    
-    $('#1').click(function(){
-       $('#contenido').load('./page/conex.php', {}, function(msg){});
-    });
-    
-    
-    $('#contenido').on('click', '.sesion', function(){
-        
-        var usuario = $('#usuario').val();
-        var pass = $('#pass').val();
-        var ip = $('#ip').val();
-        $.ajax({
-           url: './page/conexion.php',
-           type: 'POST',
-           dataType: 'html',
-           data:{
-               usuario: usuario,
-               pass: pass,
-               ip: ip
-               
-           },
-           beforeSend: function(){
-                $('#contenido').html('');
-                $('#contenido').html('ESPERE POR FAVOR....');
-           },
-           success: function(data){
-               
-               $('#contenido').html(data);
-           }
-           
-        });
-    });
 
-    $.ajax({
-       url: './scripts/getPaises.php',
-        type: 'POST',
-        dataType: 'json',
-        success: function (data) {
-           alert(data);
-           var html = '';
-            $.each(data, function (i, item) {
-               html+='<option value='+item.id+' value='+item.pais+'></option>';
-            });
-            $('#paises').append(html);
+    $('#paises').load('./scripts/getPaises.php', {}, function (msg) {
 
-        }
-    });
+    })
     
 });
 //INICIO DE SESION
@@ -92,8 +52,6 @@ $(document).on('click', '#login', function () {
                 switch (data) {
                     case '1':
                         window.location = 'http://localhost/admin/panel.php';
-
-
                         new PNotify({
                             title: 'Error',
                             text: 'Lo que si es verga',
@@ -109,6 +67,14 @@ $(document).on('click', '#login', function () {
                             type: 'error'
                         });
                         break;
+                    case '-3':
+                        new PNotify({
+                            title: 'Error',
+                            text: 'Ya Existe una sesión del usuario ingresado',
+                            type: 'error'
+                        });
+
+                        break;
                     default:
                         break;
                 }
@@ -121,6 +87,66 @@ $(document).on('click', '#login', function () {
 });
 
 //REGISTRAR UN NUEVO USUARIO
+
+$(document).on('click', '#crearUsuario', function () {
+    var nombre = $('#nombre').val();
+    var apellidomat = $('#apellidomat').val();
+    var apellidopat = $('#apellidopat').val();
+    var pais = $('#paises').val();
+    var usualogin = $('#usualogin').val();
+    var pass = $('#password').val();
+    var correo = $('#correo').val();
+    var dni = $('#dni').val();
+
+    if(nombre == "" || apellidomat == "" || apellidopat == "" || pais == "" || pass=="" || correo == "" || usualogin == "" || dni == ""){
+        alert("Por favor ingrese todos los datos solicitados");
+    }else{
+        if(pais == null){
+            alert("No ha seleccionado un país de la lista");
+        }else{
+            $.ajax({
+                url: './page/sesion/registro.php',
+                type: 'POST',
+                dataType: 'text',
+                data: {
+                    nombre : nombre,
+                    apellidomat : apellidomat,
+                    apellidopat : apellidopat,
+                    pais : pais,
+                    dni : dni,
+                    usualogin : usualogin,
+                    pass : pass,
+                    correo : correo
+                },
+                beforeSend: function () {
+                    $('#container').html("<img src='./img/init_sesion.gif' >");
+                },
+                success: function (data) {
+                    switch (data){
+                        case '1':
+                            new PNotify({
+                                title: 'Éxito',
+                                text: 'El usuario ha sido creado satisfactoriamente',
+                                type: 'success'
+                            });
+                            break;
+                        case '-2':
+                            new PNotify({
+                                title: 'Alerta',
+                                text: 'Usuario creado anteriormente, vuelva a intentar',
+                                type: 'alert'
+                            });
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+            });
+        }
+    }
+
+});
 
 
 

@@ -7,7 +7,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 2 | Starter</title>
+    <title>Servicio Mikrotik | Start</title>
+
+    <!-- JquerY 2 -->
+
+    <script src="admin/plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script type="text/javascript" src="js/funciones.js?Ver0.1_Dev7"></script>
+    <script type="text/javascript" src="js/pnotify.custom.min.js"></script>
+    <!-- Bootstrap 3.3.6 -->
+    <script src="admin/bootstrap/js/bootstrap.min.js"></script>
+    <!-- SELECT2 -->
+    <script type="text/javascript" src='admin/plugins/select2/select2.full.min.js'></script>
 
     <link rel="stylesheet" href="css/estilo.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -28,9 +38,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <option id="null" value="-1">Seleccione su país</option>
             </select>
             <br>
+            <input type="text" placeholder="Numero de Identificacion" id="dni"/>
+            <input type="text" placeholder="Usuario" id="usualogin"/>
             <input type="password" placeholder="Contraseña" id="pass"/>
             <input type="text" placeholder="E-mail" id="correo"/>
-            <button>crear</button>
+            <button class="crear" id="crearUsuario">crear</button>
             <p class="message">Ya estás registrado? <a href="#">Inicia sesión</a></p>
         </form>
         <form class="login-form">
@@ -47,15 +59,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </div>
     
 
-<!-- JquerY 2 -->
 
-<script src="admin/plugins/jQuery/jquery-2.2.3.min.js"></script>
-<script type="text/javascript" src="js/funciones.js?Ver0.1_Dev19"></script>
-<script type="text/javascript" src="js/pnotify.custom.min.js"></script>
-<!-- Bootstrap 3.3.6 -->
-<script src="admin/bootstrap/js/bootstrap.min.js"></script>
-<!-- SELECT2 -->
-<script type="text/javascript" src='admin/plugins/select2/select2.full.min.js'></script>
 
 </body>
 </html>

@@ -27,16 +27,11 @@ if(!$res){
     echo mysqli_error($connection);
 }
 
-$data = Array();
 
+$html = "<option id=\"null\" value=\"-1\">Seleccione su país</option>";
 while ($row = mysqli_fetch_array($res)){
-    $data[] = array(
-        'id' => $row['id'],
-        'pais' => $row['nombre'],
-    );
+    $html.="<option value='".$row['id']."' id='".$row['id']."'>".$row['nombre']."</option>";
 }
 
-echo var_dump($data);
-
-echo json_encode($data, JSON_PRETTY_PRINT);
+echo $html;
 
